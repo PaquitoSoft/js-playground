@@ -120,3 +120,10 @@
 #sidebar a.simplecart_checkout, .checkoutemptylinks a.simplecart_checkout {
 	margin: 0;
 }
+
+.itemQuantity input {
+	width: 35px;
+}
+.itemTotal{
+	margin: -6px 0 0 10px;
+}

@@ -43,6 +43,10 @@
 		return result;
 	}
 
+	function isNumber(source) {
+		return !isNaN(source - 0);
+	}
+
 	function drawBrands(productsData) {
 		Object.keys(productsData).forEach(function(brand) {
 			brandsNamesContainer.append('<span data-code="' + brand + '">' + $.camelCase('-' + brand) + '</span>');
@@ -62,7 +66,7 @@
 						'<div class="itemName">' + product.name.substr(0, 10) + '</div>' +
 						'<div class="itemPrice">$' + product.price + '</div>' +
 						'<div class="itemOptions"> </div>' +
-						'<div class="itemQuantity"><input type="text" value="1"></div>' +
+						'<div class="itemQuantity"><input type="text" name="quantity" value="1" maxlength="2"></div>' +
 						'<div class="itemTotal">$' + product.price + '</div>';
 	}
 
@@ -124,6 +128,22 @@
 
 		});
 	}
+
+	function configureOrderItemQtyChange(productsData) {
+		var codes = [8, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
+		miniShopCart.on('keydown', '.itemQuantity input', function(event) {
+			if (codes.indexOf(event.which) === -1) {
+				event.preventDefault();
+			}
+		});
+		miniShopCart.on('keyup', '.itemQuantity input', function(event) {
+			var qty = $(this).val(),
+				productEl = $(this).parents('.itemContainer').first(),
+				productData = getProductData(productsData, productEl.attr('data-productId')),
+				newPrice = formatPrice(qty * productData.price);
+			productEl.find('.itemTotal').html(newPrice);
+		});
+	}
 	
 	// Setup page
 	loadProductsData(function(data) { // Load products data
@@ -139,6 +159,9 @@
 
 		// Configure add to cart action
 		configureAddToCart(data);
+
+		// Configure update order items quantity
+		configureOrderItemQtyChange(data);
 	});
 	
 

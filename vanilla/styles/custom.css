@@ -127,3 +127,13 @@
 .itemTotal{
 	margin: -6px 0 0 10px;
 }
+
+.grandTotal {
+	display: inline;
+	margin-left: 15px;
+	font-size: 18px;
+	color: #429132;
+}
+.grandTotal .orderTotal {
+	color: #000;
+}

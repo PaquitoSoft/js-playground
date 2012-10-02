@@ -2,7 +2,8 @@
 	var PRODUCTS_DATA_KEY = 'products_data',
 		brandsNamesContainer = $('.brands'),
 		productsContainer = $('#catalog'),
-		miniShopCart = $('.simpleCart_items');
+		miniShopCart = $('.simpleCart_items'),
+		orderTotal = $('#sidebar .orderTotal');
 
 	function getAllProducts(productsData) {
 		var result = [];
@@ -51,6 +52,16 @@
 		Object.keys(productsData).forEach(function(brand) {
 			brandsNamesContainer.append('<span data-code="' + brand + '">' + $.camelCase('-' + brand) + '</span>');
 		});
+	}
+
+	function updateOrderTotal(productsData) {
+		var total = 0;
+		miniShopCart.find('.itemContainer').each(function(item, orderItem) {
+			var productData = getProductData(productsData, $(orderItem).attr('data-productId')),
+				orderItemTotal = parseInt($(orderItem).find('.itemQuantity input').val(), 10) * parseFloat(productData.price, 10);
+			total += orderItemTotal;
+		});
+		orderTotal.html(formatPrice(total));
 	}
 
 	function createProductsHtml(products) {
@@ -126,11 +137,12 @@
 				miniShopCart.append(createMiniShopCartItemHtml(productData));
 			}
 
+			updateOrderTotal(productsData);
 		});
 	}
 
 	function configureOrderItemQtyChange(productsData) {
-		var codes = [8, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
+		var codes = [8, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105];
 		miniShopCart.on('keydown', '.itemQuantity input', function(event) {
 			if (codes.indexOf(event.which) === -1) {
 				event.preventDefault();
@@ -142,6 +154,7 @@
 				productData = getProductData(productsData, productEl.attr('data-productId')),
 				newPrice = formatPrice(qty * productData.price);
 			productEl.find('.itemTotal').html(newPrice);
+			updateOrderTotal(productsData);
 		});
 	}
 	

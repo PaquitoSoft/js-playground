@@ -29,6 +29,20 @@
 		return result;
 	}
 	
+	function formatPrice(price) {
+		var result = "$" + price,
+			index = result.indexOf('.');
+
+		if (index !== -1) {
+			if (result.substr(index + 1).length < 2) {
+				result += '0';
+			}
+		} else {
+			result += '.00';
+		}
+		return result;
+	}
+
 	function drawBrands(productsData) {
 		Object.keys(productsData).forEach(function(brand) {
 			brandsNamesContainer.append('<span data-code="' + brand + '">' + $.camelCase('-' + brand) + '</span>');
@@ -44,11 +58,11 @@
 	}
 
 	function createMiniShopCartItemHtml(product) {
-		return '<div class="itemContainer" data-productId="' + product.id + '"><div class="itemImage"><img src="' + product.imgUrl + '"></div>' + 
+		return '<div class="itemContainer" data-productId="' + product.id + '"><div class="itemImage"><img src="' + product.imgUrl + '"></div>' +
 						'<div class="itemName">' + product.name.substr(0, 10) + '</div>' +
 						'<div class="itemPrice">$' + product.price + '</div>' +
-						'<div class="itemOptions"> </div>' + 
-						'<div class="itemQuantity"><input type="text" value="1"></div>' + 
+						'<div class="itemOptions"> </div>' +
+						'<div class="itemQuantity"><input type="text" value="1"></div>' +
 						'<div class="itemTotal">$' + product.price + '</div>';
 	}
 
@@ -79,13 +93,13 @@
 	function configureBrandsLinks(productsData) {
 		brandsNamesContainer.on('click', 'span', function(e) {
 			e.preventDefault();
-			var brand = $(this);
+			var brand = $(this), isSelected = brand.hasClass('selected');
 			brandsNamesContainer.find('span').removeClass('selected');
-			if (brand.hasClass('selected')) {
+			if (isSelected) {
 				showAllProducts(productsData);
 			} else {
 				brand.addClass('selected');
-				showBrandProducts(brand.attr('data-code'), productsData);	
+				showBrandProducts(brand.attr('data-code'), productsData);
 			}
 		});
 	}
@@ -103,7 +117,7 @@
 				prevOrderItemTotalPrice = prevItem.find('.itemTotal');
 				newQty = parseInt(prevOrderItemQty.val(), 10) + 1;
 				prevOrderItemQty.val(newQty);
-				prevOrderItemTotalPrice.html('$' + (newQty * parseFloat(prevItem.find('.itemPrice').text().substr(1), 10)));
+				prevOrderItemTotalPrice.html(formatPrice(newQty * parseFloat(prevItem.find('.itemPrice').text().substr(1), 10)));
 			} else {
 				miniShopCart.append(createMiniShopCartItemHtml(productData));
 			}
@@ -111,7 +125,7 @@
 		});
 	}
 	
-	// Setup page 
+	// Setup page
 	loadProductsData(function(data) { // Load products data
 
 		// Insert brands links

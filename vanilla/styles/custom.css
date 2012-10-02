@@ -46,6 +46,8 @@
 }
 
 
+
+
 /* My customizations */
 .contentHeader span {
 	color: #fff;
@@ -77,6 +79,9 @@
 	border-radius: 5px;
 	margin: -83px 0 0 0;
 	padding-left: 5px;
+}
+#sidebar h2 {
+	margin: 10px 0 0 10px
 }
 #header, #catalog, #sidebar {
 	background-color: #fff;
@@ -110,4 +115,8 @@
 	width: 60px;
 	padding: 0;
 	text-align: center;
+}
+
+#sidebar a.simplecart_checkout, .checkoutemptylinks a.simplecart_checkout {
+	margin: 0;
 }

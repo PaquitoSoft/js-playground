@@ -38,7 +38,7 @@
 			if (result.substr(index + 1).length < 2) {
 				result += '0';
 			} else {
-				result = result.substr(0, 6);
+				result = result.substr(0, index + 3);
 			}
 		} else {
 			result += '.00';

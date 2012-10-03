@@ -1,4 +1,4 @@
 js-playground
 =============
 
-A simplistics app to be implemented with different JS frameworks
+A simplistic app to be implemented with different JS frameworks

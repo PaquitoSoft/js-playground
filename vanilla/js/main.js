@@ -37,6 +37,8 @@
 		if (index !== -1) {
 			if (result.substr(index + 1).length < 2) {
 				result += '0';
+			} else {
+				result = result.substr(0, 6);
 			}
 		} else {
 			result += '.00';
@@ -96,7 +98,7 @@
 	function loadProductsData(callback) {
 		var data = localStore.getItem(PRODUCTS_DATA_KEY);
 		if (!data) {
-			$.getJSON('/resources/products_data_2.json', function(extData) {
+			$.getJSON('../resources/products_data_2.json', function(extData) {
 				localStore.setItem(PRODUCTS_DATA_KEY, JSON.stringify(extData));
 				callback(extData);
 			});

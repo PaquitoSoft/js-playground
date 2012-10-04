@@ -1,6 +1,7 @@
 (function($, localStore) {
 	var PRODUCTS_DATA_KEY = 'products_data',
 		brandsNamesContainer = $('.brands'),
+		resultsCount = $('.resultsCount'),
 		productsContainer = $('#catalog'),
 		miniShopCart = $('.simpleCart_items'),
 		orderTotal = $('#sidebar .orderTotal');
@@ -83,16 +84,25 @@
 						'<div class="itemTotal">$' + product.price + '</div>';
 	}
 
-	function showAllProducts(productsData) {
-		var products = [];
-		brandsNamesContainer.find('span').removeClass('selected');
-		productsContainer.html(createProductsHtml(getAllProducts(productsData)));
-	}
+	function updateProductsGrid(productsData) {
+		var products = [],
+			selectedBrands = brandsNamesContainer.find('span.selected');
 
-	function showBrandProducts(brand, productsData) {
-		brandsNamesContainer.find('span').removeClass('selected');
-		brandsNamesContainer.find('span[data-code="' + brand + '"]').addClass('selected');
-		productsContainer.html(createProductsHtml(productsData[brand]));
+		// If no brand is selected, we show all products
+		if (selectedBrands.length < 1) {
+			selectedBrands = brandsNamesContainer.find('span');
+		}
+
+		// Get products to show data
+		selectedBrands.each(function(i, brandEl) {
+			products = products.concat(productsData[$(brandEl).attr('data-code')]);
+		});
+
+		// Update products grid
+		productsContainer.html(createProductsHtml(products));
+
+		// Update products count
+		resultsCount.html(products.length);
 	}
 
 	function loadProductsData(callback) {
@@ -110,14 +120,10 @@
 	function configureBrandsLinks(productsData) {
 		brandsNamesContainer.on('click', 'span', function(e) {
 			e.preventDefault();
-			var brand = $(this), isSelected = brand.hasClass('selected');
-			brandsNamesContainer.find('span').removeClass('selected');
-			if (isSelected) {
-				showAllProducts(productsData);
-			} else {
-				brand.addClass('selected');
-				showBrandProducts(brand.attr('data-code'), productsData);
-			}
+			
+			$(this).toggleClass('selected'),
+			
+			updateProductsGrid(productsData);
 		});
 	}
 
@@ -167,7 +173,7 @@
 		drawBrands(data);
 
 		// Show all products
-		showAllProducts(data);
+		updateProductsGrid(data);
 
 		// Configure brands links
 		configureBrandsLinks(data);

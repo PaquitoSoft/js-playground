@@ -78,6 +78,9 @@
 #catalog li img {
 	width: 137px;
 }
+#catalog li b {
+	font-size: 14px;
+}
 #sidebar {
 	border-radius: 5px;
 	margin: -83px 0 0 0;
@@ -151,4 +154,22 @@
 	background-color: #429132;
 	border-radius: 5px;
 	padding: 2px 5px 2px 5px;
+}
+
+.orderProcessMsg {
+	color: #429132;
+	font-size: 20px;
+	margin: 140px 0 0 30px;
+}
+
+.orderBy {
+	width: 725px;
+	float: left;
+	background-color: #fff;
+	position: relative;
+}
+.orderBy div {
+	position: absolute;
+	top: -15px;
+	right: 10px;
 }

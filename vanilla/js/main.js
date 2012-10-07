@@ -65,7 +65,9 @@
 	function createProductsHtml(products) {
 		var result = [];
 		products.forEach(function(product) {
-			result.push('<li data-id="' + product.id + '"><img src="' + product.imgUrl + '"><span class="price">$' + product.price + '</span><b>' + product.name.substr(0, 10) + '<br/><a href="#"> add to cart</a></b>');
+			result.push('<li class="product" data-id="' + product.id + '" data-brandCode="' + product.brandCode + '"><img src="' +
+				product.imgUrl + '"><span class="price">$' + product.price + '</span><b>' +
+				product.name.substr(0, 10) + '<br/><a href="#"> add to cart</a></b>');
 		});
 		return result.join('');
 	}
@@ -91,7 +93,12 @@
 
 		// Get products to show data
 		selectedBrands.each(function(i, brandEl) {
-			products = products.concat(productsData[$(brandEl).attr('data-code')]);
+			var brandCode = $(brandEl).attr('data-code');
+			var aux = productsData[brandCode];
+			aux.forEach(function(p) {
+				p.brandCode = brandCode;
+			});
+			products = products.concat(aux);
 		});
 
 		// Apply selected order

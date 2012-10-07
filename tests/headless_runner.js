@@ -38,6 +38,13 @@ page.open('http://localhost:8888/tests/runner.html', function(status) {
 		phantom.exit(1);
 	} else {
 		console.log("Tests runner loaded; running tests...");
+
+		var bodyContent = page.evaluate(function() {
+			return document.body.innerText;
+		});
+		console.log(bodyContent);
+
+
 		waitFor(function() {
 			return page.evaluate(function() {
 				var el = document.getElementById('qunit-testresult');

@@ -86,7 +86,12 @@ test("Products filtering", function() {
 });
 
 test("Products ordering", function() {
-	
+
+	// Check default order is none
+	S('.orderPrice option[selected="selected"]').text('---');
+
+	// Select 'ascending' and check selected value and product items order
+
 });
 
 // Adicion al carro

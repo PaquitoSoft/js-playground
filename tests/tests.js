@@ -1,3 +1,10 @@
+// Helper functions
+function checkPrices(first, last) {
+	S('.product .price:first').text(first);
+	S('.product .price:last').text(last);
+}
+
+// Test suite definition
 module("Simple Cart", {
   setup: function() {
     // opens the page you want to test
@@ -90,10 +97,57 @@ test("Products ordering", function() {
 	// Check default order is none
 	S('.orderPrice option[selected="selected"]').text('---');
 
-	// Select 'ascending' and check selected value and product items order
+	// Select 'ascending'
+	S('.orderPrice option[value="asc"]').click();
+
+	// Check first and last products
+	checkPrices('$12.99', '$189.99');
+	
+	// Change selection to 'descending'
+	S('.orderPrice option[value="desc"]').click();
+
+	// Check first and last products
+	checkPrices('$189.99', '$12.99');
+	
+	// Revert order to initial status
+	S('.orderPrice option[value="none"]').click();
+
+	// Check first and last products
+	checkPrices('$44.99', '$14.99');
+	
+	// Filter products by brand and order them price 'ascending'
+	S('.brands span[data-code="asics"]').click();
+	S('.orderPrice option[value="asc"]').click();
+
+	// Check first and last products
+	checkPrices('$59.99', '$114.99');
+
+	// Add a new brand filter
+	S('.brands span[data-code="umbro"]').click();
+
+	// Check first and last products
+	checkPrices('$14.99', '$114.99');
 
 });
 
-// Adicion al carro
+// Shopping cart addition
+test("Add products to cart", function() {
 
-// Finalizar pedido
+	// Add a product to the shopping cart and check its addition
+	var productId = S('.product:nth(10)').attr('data-id');
+	S('.product:nth(10) a').click();
+
+	// Shopping cart should only have one item
+	S('.simpleCart_items .itemContainer').size(1);
+
+	// Shopping cart product should be the one clicked
+	S(function() {
+		var addedProductId = S('.simpleCart_items .itemContainer:first').attr('data-productId');
+		equal(productId, addedProductId, "Visible products match selected brands");
+	});
+
+	// TODO Complete this test
+
+});
+
+// TODO Order checkout

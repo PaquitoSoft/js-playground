@@ -1,5 +1,3 @@
-var system = require('system');
-
 function waitFor(testFx, onReady, timeoutMillis) {
 	var maxTimeoutMillis = timeoutMillis || 3001, // Default 3 seconds timeout
 		start = Date.now(),
@@ -60,7 +58,7 @@ page.open('http://localhost:8888/tests/runner.html', function(status) {
 				console.log(el.innerText);
 				try {
 					return el.getElementsByClassName('failed')[0].innerHtml;
-				} catch (e) { 
+				} catch (e) {
 					console.log('Error...');
 					console.log(e);
 				}

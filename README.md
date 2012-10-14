@@ -1,4 +1,4 @@
-js-playground
+js-playground [![Build Status](https://travis-ci.org/PaquitoSoft/js-playground.png)](https://travis-ci.org/PaquitoSoft/js-playground)
 =============
 
 This is a simple app implementing a basic shopping cart.

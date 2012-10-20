@@ -17,76 +17,44 @@
 		<span>Simple Cart JS - Vanilla</span>
 	</div>
 
-	<div id="content">
-		<div id="header">
-			<div class="brands">
+	<div id="content" class="productPage">
+		
+		<div id="middleFrame">
+			<div class="productView">
+				<div id="productDetail" data-productId="">
+					<div class="back">
+						<a href="#" class="buttonLink">Back to catalog</a>
+					</div>
+					<div class="bigImage">
+						<img src="http://www.lovellsoccer.co.uk/products/15004.jpg">
+					</div>
+					<div class="alternativeImages">
+						<ul>
+							<li><img src="http://www.lovellsoccer.co.uk/products/15004.jpg" class="selected" style="width=100;"></li>
+							<li><img src="http://www.lovellsoccer.co.uk/thumbnails_lg/15004_2.jpg" style="width=100;"></li>
+							<li><img src="http://www.lovellsoccer.co.uk/thumbnails_lg/15004_3.jpg" style="width=100;"></li>
+							<li><img src="http://www.lovellsoccer.co.uk/thumbnails_lg/15004_4.jpg" style="width=100;"></li>
+							<li><img src="http://www.lovellsoccer.co.uk/thumbnails_lg/15004_5.jpg" style="width=100;"></li>
+						</ul>
+					</div>
+					<div class="productInfo">
+						<div class="name">
+							<span>Umbro Speciali 3 Pro A HG Football Boots</span>
+						</div>
+						<div class="productPrice">
+							<span class="label">Price: </span><span class="amount">74.99 €</span>
+						</div>
+						<div class="actions">
+							<a href="#" id="purchaseBt" class="buttonLink">Add to cart</a>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="resultsCount">0</div>
-			<hr/>
-		</div>
 
-		<div class="orderBy">
-			<div>
-				<span>Order by price:</span>
-				<select name="priceOrder" class="orderPrice">
-					<option value="none">---</option>
-					<option value="asc">Ascending</option>
-					<option value="desc">Descending</option>
-				</select>
-			</div>
 		</div>
 		
-		<!--Here's the Catalog Items. You can make anything into a product, 
-			just copy and paste the onclick attribute from one of the products 
-			below.
-		-->
-		<ul id="catalog">
-			<!--
-			<li>
-				<img src="images/products/redShoe.jpg" alt="Red Shoe" />
-				<span class="price">$50</span><b>Red Shoe<br/><a href="#" onclick="simpleCart.add('name=Red Shoe','price=50','image=images/thumbs/redShoe.jpg');return false;"> add to cart</a></b>
-			</li>
-			
-			<li>
-				<img src="images/products/goldShoe.jpg" alt="Gold Shoe" />
-				<span class="price">$70</span><b>Gold Shoe<br/><a href="#" onclick="simpleCart.add('name=Gold Shoe','price=70','image=images/thumbs/goldShoe.jpg');return false;"> add to cart</a></b>
-			</li>
-			
-			<li>
-				<img src="images/products/whiteSlipon.jpg" alt="White Slip-on" />
-				<span class="price">$45</span><b>White Slip-on<br/><a href="#" onclick="simpleCart.add('name=White Slip-on','price=45','image=images/thumbs/whiteSlipon.jpg');return false;"> add to cart</a></b>
-			</li>
-			
-			<li>
-				<img src="images/products/blackGold.jpg" alt="Black Gold" />
-				<span class="price">$58</span><b>Black Gold<br/><a href="#" onclick="simpleCart.add('name=Black Gold','price=58','image=images/thumbs/blackGold.jpg');return false;"> add to cart</a></b>
-			</li>
-			
-			<li>
-				<img src="images/boots/puma/14811.jpg" alt="Green Stripe" />
-				<span class="price">$90</span><b>Green Stripe<br/><a href="#" onclick="simpleCart.add('name=Green Stripe','price=90','image=images/thumbs/greenStripe.jpg');return false;"> add to cart</a></b>
-			</li>
-			
-			<li>
-				<img src="images/products/redStripe.jpg" alt="Red Stripe" />
-				<span class="price">$59</span><b>Red Stripe<br/><a href="#" onclick="simpleCart.add('name=Red Stripe','price=59','image=images/thumbs/redStripe.jpg');return false;"> add to cart</a></b>
-			</li>
-			
-			<li>
-				<img src="images/products/whiteStripe.jpg" alt="White Stripe" />
-				<span class="price">$75</span><b>White Stripe<br/><a href="#" onclick="simpleCart.add('name=White Stripe','price=75','image=images/thumbs/whiteStripe.jpg');return false;"> add to cart</a></b>
-			</li>
-			
-			<li>
-				<img src="images/products/creamSlipon.jpg" alt="Cream Slip-on" />
-				<span class="price">$45</span><b>Cream Slip<br/><a href="#" onclick="simpleCart.add('name=Cream Slip-on','price=45','image=images/thumbs/creamSlipon.jpg');return false;"> add to cart</a></b>
-			</li>
-			-->
-		</ul>
-		<!--/ Catalog-->
-		
-		
-		<div id="sidebar">
+	
+		<div id="sidebar" class="shoppingCart">
 			<h2>Your Cart</h2>
 			<hr/>
 			
@@ -126,9 +94,10 @@
 	<!--End #content-->		
 	</div>
 
-	<!-- Load JS -->
+	<!-- Load JS
 	<script type="text/javascript" src="/vanilla/js/lib/jquery/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="/vanilla/js/main.js"></script>
+	-->
 
 </body>
 

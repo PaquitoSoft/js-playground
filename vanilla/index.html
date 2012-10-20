@@ -18,34 +18,72 @@
 	</div>
 
 	<div id="content">
-		<div id="header">
-			<div class="brands">
-			</div>
-			<div class="resultsCount">0</div>
-			<hr/>
-		</div>
 
-		<div class="orderBy">
-			<div>
-				<span>Order by price:</span>
-				<select name="priceOrder" class="orderPrice">
-					<option value="none" selected="selected">---</option>
-					<option value="asc">Ascending</option>
-					<option value="desc">Descending</option>
-				</select>
+		<div id="middleFrame">
+
+			<div id="catalogView">
+				<div id="header">
+					<div class="brands">
+					</div>
+					<div class="resultsCount">0</div>
+					<hr/>
+				</div>
+
+				<div class="orderBy">
+					<div>
+						<span>Order by price:</span>
+						<select name="priceOrder" class="orderPrice">
+							<option value="none" selected="selected">---</option>
+							<option value="asc">Ascending</option>
+							<option value="desc">Descending</option>
+						</select>
+					</div>
+				</div>
+				
+				<!--Here's the Catalog Items. You can make anything into a product, 
+					just copy and paste the onclick attribute from one of the products 
+					below.
+				-->
+				<ul id="catalog">
+				</ul>
+				<!--/ Catalog-->
 			</div>
+
+			<div class="productView hidden">
+				<div id="productDetail" data-productId="">
+					<div class="back">
+						<a href="#" class="buttonLink">Back to catalog</a>
+					</div>
+					<div class="bigImage">
+						<img src="http://www.lovellsoccer.co.uk/products/15004.jpg">
+					</div>
+					<div class="alternativeImages">
+						<ul>
+							<li><img src="http://www.lovellsoccer.co.uk/products/15004.jpg" class="selected" style="width=100;"></li>
+							<li><img src="http://www.lovellsoccer.co.uk/thumbnails_lg/15004_2.jpg" style="width=100;"></li>
+							<li><img src="http://www.lovellsoccer.co.uk/thumbnails_lg/15004_3.jpg" style="width=100;"></li>
+							<li><img src="http://www.lovellsoccer.co.uk/thumbnails_lg/15004_4.jpg" style="width=100;"></li>
+							<li><img src="http://www.lovellsoccer.co.uk/thumbnails_lg/15004_5.jpg" style="width=100;"></li>
+						</ul>
+					</div>
+					<div class="productInfo">
+						<div class="name">
+							<span>Umbro Speciali 3 Pro A HG Football Boots</span>
+						</div>
+						<div class="productPrice">
+							<span class="label">Price: </span><span class="amount">74.99 €</span>
+						</div>
+						<div class="actions">
+							<a href="#" id="purchaseBt" class="buttonLink">Add to cart</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 		
-		<!--Here's the Catalog Items. You can make anything into a product, 
-			just copy and paste the onclick attribute from one of the products 
-			below.
-		-->
-		<ul id="catalog">
-		</ul>
-		<!--/ Catalog-->
-		
-		
-		<div id="sidebar">
+		<div id="sidebar" class="shoppingCart">
 			<h2>Your Cart</h2>
 			<hr/>
 			

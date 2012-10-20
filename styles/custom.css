@@ -83,9 +83,10 @@
 }
 #sidebar {
 	border-radius: 5px;
-	margin: -83px 0 0 0;
 	padding-left: 5px;
 	width: 275px;
+	position: absolute;
+	right: 30px;
 }
 #sidebar h2 {
 	margin: 10px 0 0 10px
@@ -173,3 +174,79 @@
 	top: -15px;
 	right: 10px;
 }
+
+.categoryPage .shoppingCart {
+	margin-top: -83px;
+}
+
+.hidden {
+	display: none;
+}
+
+
+/* START: Product detail view */
+.productPage .shoppingCart {
+	margin-top: 0;
+}
+.productView {
+	background-color: #fff;
+	padding-top: 20px;
+	float: left;
+	margin: 0;
+	border-radius: 5px 5px 5px 5px;
+	width: 725px;
+	position: relative;
+}
+.productView .back {
+	height: 30px;
+}
+.productView .buttonLink {
+	text-decoration: none;
+	background-color: #fff;
+	padding: 5px;
+	color: #429132;
+	border-radius: 5px;	
+}
+.productView a.buttonLink:hover {
+	color: #fff;
+	background-color: #429132;
+}
+.productView .bigImage img {
+	float: left;
+}
+.productView .bigImage img {
+	width: 469px;
+	height: 318px;
+}
+.productView .bigImage, .productView .alternativeImages, .productView .productInfo, .productView .back {
+	position: relative;
+	left: 30px;
+}
+.productView .alternativeImages img {
+	width: 100px;
+}
+.productView .alternativeImages img.selected {
+	border: 1px solid #429132;
+}
+.productInfo {
+	margin-top: 20px;
+}
+.productInfo div {
+	margin-bottom: 30px;
+}
+.productInfo .name {
+	font-size: 24px;
+	/*text-decoration: underline;*/
+	color: #429132;
+}
+.productInfo .productPrice .label {
+	font-size: 25px;
+}
+.productInfo .productPrice .amount {
+	font-size: 22px;
+	background-color: #429132;
+	padding: 5px;
+	color: #fff;
+	border-radius: 5px;
+}
+/* END: Product detail view */

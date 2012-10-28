@@ -1,5 +1,6 @@
 (function($, localStore) {
 	var productsData = [],
+		currentProductId,
 		selectedPriceOrder = 'none',
 		PRODUCTS_DATA_KEY = 'products_data',
 		brandsNamesContainer = $('.brands'),
@@ -8,7 +9,9 @@
 		productsOrderSelector = $('.orderPrice'),
 		miniShopCart = $('.simpleCart_items'),
 		checkoutButton = $('.simpleCart_checkout'),
-		orderTotal = $('#sidebar .orderTotal');
+		orderTotal = $('#sidebar .orderTotal'),
+		catalogPanel = $('.catalogView'),
+		productPanel = $('.productView');
 
 	
 	function getProductData(productId, brand) {
@@ -67,7 +70,8 @@
 		products.forEach(function(product) {
 			result.push('<li class="product" data-id="' + product.id + '" data-brandCode="' + product.brandCode + '"><img src="' +
 				product.imgUrl + '"><span class="price">$' + product.price + '</span><b>' +
-				product.name.substr(0, 10) + '<br/><a href="#"> add to cart</a></b>');
+				// product.name.substr(0, 10) + '<br/><a href="#"> add to cart</a></b>');
+				product.name.substr(0, 10) + '</b>');
 		});
 		return result.join('');
 	}
@@ -145,6 +149,7 @@
 		});
 	}
 
+	/*
 	function configureAddToCart() {
 		productsContainer.on('click', 'li', function(event) {
 			event.preventDefault();
@@ -168,6 +173,28 @@
 
 			updateOrderTotal();
 		});
+	}
+	*/
+	function addToCart(productId) {
+		var productData = getProductData(productId),
+			prevItem = miniShopCart.find('.itemContainer[data-productId="' + productData.id + '"]'),
+			prevOrderItemQty, prevOrderItemTotalPrice, newQty;
+
+		if (prevItem.length > 0) {
+			prevOrderItemQty = prevItem.find('.itemQuantity input');
+			prevOrderItemTotalPrice = prevItem.find('.itemTotal');
+			newQty = parseInt(prevOrderItemQty.val(), 10) + 1;
+			prevOrderItemQty.val(newQty);
+			prevOrderItemTotalPrice.html(formatPrice(newQty * parseFloat(prevItem.find('.itemPrice').text().substr(1), 10)));
+		} else {
+			if (miniShopCart.find('.itemContainer').length > 0) {
+				miniShopCart.append(createMiniShopCartItemHtml(productData));
+			} else {
+				miniShopCart.html(createMiniShopCartItemHtml(productData));
+			}
+		}
+
+		updateOrderTotal();
 	}
 
 	function configureOrderItemQtyChange() {
@@ -204,6 +231,81 @@
 		});
 	}
 
+	function configureProductView(productData) {
+		var baseImgPath = '/images/boots/product/' + productData.id + '/',
+			bigImageEl = productPanel.find('.bigImage img');
+		currentProductId = productData.id;
+		productPanel.find('.name span').text(productData.name);
+		productPanel.find('.productPrice .amount').text(productData.price + " €");
+		productPanel.find('.productDetail').attr('data-productId', productData.id);
+		bigImageEl.attr('src', baseImgPath + productData.id + '.jpg');
+
+		// Alternative images
+		productPanel.find('.alternativeImages li img').each(function(index, el) {
+			if (index === 0) {
+				$(el).attr('src', baseImgPath + productData.id + ".jpg");
+				$(el).addClass('selected');
+			} else {
+				$(el).attr('src', baseImgPath + productData.id + "_" + (index + 1) + ".jpg");
+				$(el).removeClass('selected');
+			}
+		});
+
+		if (!productPanel.data('initialized')) {
+
+			// Change images event
+			productPanel.on('click', '.alternativeImages li', function(event) {
+				bigImageEl.attr('src', $(event.target).attr('src'));
+				productPanel.find('.alternativeImages img').removeClass('selected');
+				$(event.target).addClass('selected');
+			});
+
+			// Add to cart event
+			productPanel.on('click', '.actions .buttonLink', function(event) {
+				event.preventDefault();
+				addToCart($(event.target).parents('.productDetail').attr('data-productId'));
+			});
+
+			productPanel.data('initialized', true);
+		}
+	}
+
+	function changePanel(panel, data) {
+		var oldPanel, newPanel, fn = function(){};
+		if ('catalog' === panel) {
+			oldPanel = productPanel;
+			newPanel = catalogPanel;
+			fn = function() {
+				if (currentProductId) {
+					$('html, body').animate({
+						scrollTop: catalogPanel.find('.product[data-id="' + currentProductId + '"]').offset().top - 10
+					}, 500);
+					currentProductId = null;
+				}
+			};
+		} else if ('product' === panel) {
+			oldPanel = catalogPanel;
+			newPanel = productPanel;
+
+			configureProductView(data.productData);
+		}
+		oldPanel.hide();
+		newPanel.show(100, fn);
+	}
+
+	function configureNavigation() {
+		catalogPanel.on('click', 'li', function(event) {
+			event.preventDefault();
+			changePanel('product', {
+				productData: getProductData($(this).attr('data-id'))
+			});
+		});
+		productPanel.on('click', '.back .buttonLink', function(event) {
+			event.preventDefault();
+			changePanel('catalog');
+		});
+	}
+
 	// Setup page
 	loadProductsData(function(data) { // Load products data
 		productsData = data; // Store as a module variable
@@ -221,7 +323,10 @@
 		configureProductsOrderSelection();
 
 		// Configure add to cart action
-		configureAddToCart();
+		// configureAddToCart();
+
+		// Configure navigation
+		configureNavigation();
 
 		// Configure update order items quantity
 		configureOrderItemQtyChange();

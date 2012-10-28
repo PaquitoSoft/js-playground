@@ -130,7 +130,21 @@ test("Products ordering", function() {
 
 });
 
-// Shopping cart addition
+// Product detail navigation
+test("Product detail navigation", function() {
+
+	S('.product[data-id="th12739"]').click();
+	S('.productView').visible();
+	S('.catalogView').invisible();
+	S('.productView .productPrice .amount').text(function(price) {
+		console.log(arguments);
+		console.log(this);
+		return price.indexOf('39.99') !== -1;
+	});
+});
+
+// TODO Shopping cart addition
+/*
 test("Add products to cart", function() {
 
 	// Add a product to the shopping cart and check its addition
@@ -149,5 +163,6 @@ test("Add products to cart", function() {
 	// TODO Complete this test
 
 });
+*/
 
 // TODO Order checkout

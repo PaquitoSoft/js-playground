@@ -1,0 +1,30 @@
+<html><head>
+<title>Lovell Soccer UK - Error 404</title>
+
+<meta name="robots" content="noindex" />
+<meta name="ROBOTS" content="NOODP" />
+
+<base href="http://www.lovellsoccer.co.uk/">
+
+<link rel="stylesheet" href="css/global.css" type="text/css" />
+<link rel="stylesheet" href="css/newsite.css" type="text/css" />
+
+</head>
+
+<body style="padding: 50px">
+
+<a href="http://www.lovellsoccer.co.uk/"><img src="images/soccer/logo.png" alt="football boots" width="198" height="77" border="0" vspace="4" hspace="4"/></a>
+
+<p>The page you have requested cannot be found.</p>
+
+<p>Please return to the <a href="http://www.lovellsoccer.co.uk/">home page</a> or one of the sections below.</p>
+
+<ul>
+
+<li><a href="http://www.lovellsoccer.co.uk/login">Your Account</a></li>
+
+<li><a href="http://www.lovellsoccer.co.uk/help.htm">Website Help</a></li>
+
+</ul>
+
+</body></html>

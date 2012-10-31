@@ -149,32 +149,6 @@
 		});
 	}
 
-	/*
-	function configureAddToCart() {
-		productsContainer.on('click', 'li', function(event) {
-			event.preventDefault();
-			var productData = getProductData($(this).attr('data-id')),
-				prevItem = miniShopCart.find('.itemContainer[data-productId="' + productData.id + '"]'),
-				prevOrderItemQty, prevOrderItemTotalPrice, newQty;
-
-			if (prevItem.length > 0) {
-				prevOrderItemQty = prevItem.find('.itemQuantity input');
-				prevOrderItemTotalPrice = prevItem.find('.itemTotal');
-				newQty = parseInt(prevOrderItemQty.val(), 10) + 1;
-				prevOrderItemQty.val(newQty);
-				prevOrderItemTotalPrice.html(formatPrice(newQty * parseFloat(prevItem.find('.itemPrice').text().substr(1), 10)));
-			} else {
-				if (miniShopCart.find('.itemContainer').length > 0) {
-					miniShopCart.append(createMiniShopCartItemHtml(productData));
-				} else {
-					miniShopCart.html(createMiniShopCartItemHtml(productData));
-				}
-			}
-
-			updateOrderTotal();
-		});
-	}
-	*/
 	function addToCart(productId) {
 		var productData = getProductData(productId),
 			prevItem = miniShopCart.find('.itemContainer[data-productId="' + productData.id + '"]'),
@@ -236,7 +210,7 @@
 			bigImageEl = productPanel.find('.bigImage img');
 		currentProductId = productData.id;
 		productPanel.find('.name span').text(productData.name);
-		productPanel.find('.productPrice .amount').text(productData.price + " €");
+		productPanel.find('.productPrice .amount').text('$' + productData.price);
 		productPanel.find('.productDetail').attr('data-productId', productData.id);
 		bigImageEl.attr('src', baseImgPath + productData.id + '.jpg');
 
@@ -321,9 +295,6 @@
 
 		// Configure products order change
 		configureProductsOrderSelection();
-
-		// Configure add to cart action
-		// configureAddToCart();
 
 		// Configure navigation
 		configureNavigation();

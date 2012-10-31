@@ -136,20 +136,24 @@ test("Product detail navigation", function() {
 	S('.product[data-id="th12739"]').click();
 	S('.productView').visible();
 	S('.catalogView').invisible();
+	S('.productView .productDetail').attr('data-productId', 'th12739');
 	S('.productView .productPrice .amount').text(function(price) {
-		console.log(arguments);
-		console.log(this);
 		return price.indexOf('39.99') !== -1;
 	});
+
+	S('.back a').click();
+	S('.productView').invisible();
+	S('.catalogView').visible();
 });
 
-// TODO Shopping cart addition
-/*
+// Shopping cart
 test("Add products to cart", function() {
+	var productId_1 = "th12809",
+		productId_2 = "th14007";
 
 	// Add a product to the shopping cart and check its addition
-	var productId = S('.product:nth(10)').attr('data-id');
-	S('.product:nth(10) a').click();
+	S('.product[data-id="' + productId_1 + '"]').click();
+	S('.productView .actions .buttonLink').visible().click();
 
 	// Shopping cart should only have one item
 	S('.simpleCart_items .itemContainer').size(1);
@@ -157,12 +161,54 @@ test("Add products to cart", function() {
 	// Shopping cart product should be the one clicked
 	S(function() {
 		var addedProductId = S('.simpleCart_items .itemContainer:first').attr('data-productId');
-		equal(productId, addedProductId, "Visible products match selected brands");
+		equal(productId_1, addedProductId, "Visible products match selected brands");
 	});
 
-	// TODO Complete this test
+	// Shopping cart total should be equals to the product price
+	S(function() {
+		var bootsPrice = S('.productPrice .amount').text();
+		S('.orderTotal').text(bootsPrice);
+	});
+
+	// Let's add the same product again
+	S('.productView .actions .buttonLink').visible().click();
+
+	// Shopping cart must still have only one item
+	S('.simpleCart_items .itemContainer').size(1);
+
+	// Quantity and price should have changed
+	S('.shoppingCart .itemContainer input[name="quantity"]').val('2');
+	// S('.shoppingCart .itemContainer input[name="quantity"]').attr('value', '2');
+	S('.shoppingCart .itemContainer .itemTotal').text('$59.98');
+	S('.shoppingCart .orderTotal').text('$59.98');
+	
+	// Now we go to another product detail page and add it to the cart
+	S('.productDetail .back a').click();
+	S('.product[data-id="' + productId_2 + '"]').click();
+	S('.productView .actions .buttonLink').visible().click();
+	
+	// Shopping cart should now have two items
+	S('.simpleCart_items .itemContainer').size(2);
+
+	// Shopping cart product should be the one clicked
+	S(function() {
+		var addedProductId = S('.simpleCart_items .itemContainer:nth(1)').attr('data-productId');
+		equal(productId_2, addedProductId, "Visible products match selected brands");
+	});
+
+	// Order total should have changed
+	S('.shoppingCart .orderTotal').text('$139.97');
+
+	// Now we checkout the order
+	S('.simpleCart_checkout').click();
+
+	// There must be no items in the cart
+	S('.simpleCart_items .itemContainer').size(0);
+
+	// Order total amount should be zero
+	S('.shoppingCart .orderTotal').text('$0.00');
+
+	// Shopping cart should show a message
+	S('.shoppingCart .orderProcessMsg').visible().text("Thanks for purchase!");
 
 });
-*/
-
-// TODO Order checkout

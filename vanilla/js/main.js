@@ -68,10 +68,10 @@
 	function createProductsHtml(products) {
 		var result = [];
 		products.forEach(function(product) {
-			result.push('<li class="product" data-id="' + product.id + '" data-brandCode="' + product.brandCode + '"><img src="' +
+			result.push('<li class="product" data-id="' + product.id + '" data-brandCode="' + product.brandCode + '">' +
+				'<a href="#/boots/' + product.id + '" class="bootDetailLink"><img src="' +
 				product.imgUrl + '"><span class="price">$' + product.price + '</span><b>' +
-				// product.name.substr(0, 10) + '<br/><a href="#"> add to cart</a></b>');
-				product.name.substr(0, 10) + '</b>');
+				product.name.substr(0, 10) + '</b></a>');
 		});
 		return result.join('');
 	}

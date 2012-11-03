@@ -1,0 +1,86 @@
+<!doctype html>
+<html ng-app="bootsStore">
+<head>
+	<meta charset="utf-8"/>
+
+	<title>SimpleCart - AngularJS</title>
+	<link rel="stylesheet" href="../styles/example.css" type="text/css" media="screen" charset="utf-8" />
+	<!--[if lte IE 6]><link rel="stylesheet" href="../styles/ie6.css" type="text/css" media="screen" charset="utf-8" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" href="../styles/ie7.css" type="text/css" media="screen" charset="utf-8" /><![endif]-->
+
+	<!--CSS for the Cart. -->
+	<link rel="stylesheet" href="../styles/custom.css" type="text/css" media="screen" charset="utf-8" />
+
+	<!-- Angular script -->
+	<script type="text/javascript" src="js/lib/angular/angular.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/controllers.js"></script>
+	<script type="text/javascript" src="js/filters.js"></script>
+	<script type="text/javascript" src="js/services.js"></script>
+  	<script type="text/javascript" src="js/lib/angular/angular-resource.js"></script>
+
+</head>
+
+<body>
+	<div id="topFrame" class="contentHeader">
+		<span>Simple Cart JS - AngularJS</span>
+	</div>
+
+	<div id="content">
+
+		<div id="middleFrame">
+
+			<div ng-view></div>
+
+		</div>
+		
+		<div id="sidebar" class="shoppingCart" ng-controller="ShoppingCartController">
+			<h2>Your Cart</h2>
+			<hr/>
+			
+			
+			<!--Add a Div with the class "simpleCart_items" to show your shopping cart area.-->
+			<div class="simpleCart_items" >
+
+				<div ng-repeat="orderItem in orderItems" class="itemContainer" data-productid="{{orderItem.product.id}}">
+					<div class="itemImage">
+						<img ng-src="/images/boots/{{orderItem.product.brandCode}}/{{orderItem.product.id}}.jpg">
+					</div>
+					<div class="itemName">{{orderItem.product.shortName}}</div>
+					<div class="itemPrice">${{orderItem.product.price}}</div>
+					<div class="itemOptions"> </div>
+					<div class="itemQuantity">
+						<input type="text" name="quantity" value="{{orderItem.quantity}}" maxlength="2">
+					</div>
+					<div class="itemTotal">{{orderItem.amount | currency:"$"}}</div>
+				</div>
+
+			</div>
+			
+			
+			<!--Here's the Links to Checkout and Empty Cart-->
+			<a href="#" class="simpleCart_checkout" ng-click="checkout($event)">Checkout</a>
+			
+			<div class="grandTotal">
+				<span>Total:</span>
+				<span class="orderTotal">{{totalAmount | currency:"$"}}</span>
+			</div>
+			
+		<!--End #sidebar-->	
+		</div>
+
+		<div id="footer">
+			Created by <a href="http://thewojogroup.com"><img src="../images/wojo.gif" alt="The Wojo Group" /></a> <a href="http://thewojogroup.com">The Wojo Group</a> &nbsp;&nbsp;
+			&bull;&nbsp;&nbsp;<img src="../images/microLogo.gif" alt="simple cart js" style="vertical-align:bottom" /> is licensed under <a href="#">MIT License</a>
+		</div>	
+	<!--End #content-->		
+	</div>
+
+	<!-- Load JS 
+	<script type="text/javascript" src="/vanilla/js/lib/jquery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/vanilla/js/main.js"></script>
+	-->
+
+</body>
+
+</html>

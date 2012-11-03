@@ -8,7 +8,8 @@ function checkPrices(first, last) {
 module("Simple Cart", {
   setup: function() {
     // opens the page you want to test
-    S.open("../vanilla/index.html");
+    // S.open("../vanilla/index.html");
+    S.open("../angular/index.html");
   }
 });
 
@@ -27,15 +28,15 @@ test("Asserting page initial state", function() {
 	S('.resultsCount').text('279');
 
 	// Shopping cart must be empty
-	S('.simpleCart_items').html(function(html) {
-		return html.trim() === "";
-	});
+	S('.simpleCart_items .itemContainer').size(0);
 
 	// Order grand total must be 0
 	S('.orderTotal').text('$0.00');
 
 	// Products order must be 'none'
-	S('.orderPrice option[selected="selected"]').val('none');
+	S('.orderPrice option[selected="selected"]').val(function(val) {
+		return val === 'none' || val === '';
+	});
 
 });
 
@@ -98,26 +99,26 @@ test("Products ordering", function() {
 	S('.orderPrice option[selected="selected"]').text('---');
 
 	// Select 'ascending'
-	S('.orderPrice option[value="asc"]').click();
+	S('.orderPrice option:nth-child(2)').click();
 
 	// Check first and last products
 	checkPrices('$12.99', '$189.99');
 	
 	// Change selection to 'descending'
-	S('.orderPrice option[value="desc"]').click();
+	S('.orderPrice option:nth-child(3)').click();
 
 	// Check first and last products
 	checkPrices('$189.99', '$12.99');
 	
 	// Revert order to initial status
-	S('.orderPrice option[value="none"]').click();
+	S('.orderPrice option:nth-child(1)').click();
 
 	// Check first and last products
 	checkPrices('$44.99', '$14.99');
 	
 	// Filter products by brand and order them price 'ascending'
 	S('.brands span[data-code="asics"]').click();
-	S('.orderPrice option[value="asc"]').click();
+	S('.orderPrice option:nth-child(2)').click();
 
 	// Check first and last products
 	checkPrices('$59.99', '$114.99');
@@ -133,7 +134,7 @@ test("Products ordering", function() {
 // Product detail navigation
 test("Product detail navigation", function() {
 
-	S('.product[data-id="th12739"]').click();
+	S('.product[data-id="th12739"] a').click();
 	S('.productView').visible();
 	S('.catalogView').invisible();
 	S('.productView .productDetail').attr('data-productId', 'th12739');
@@ -152,7 +153,7 @@ test("Add products to cart", function() {
 		productId_2 = "th14007";
 
 	// Add a product to the shopping cart and check its addition
-	S('.product[data-id="' + productId_1 + '"]').click();
+	S('.product[data-id="' + productId_1 + '"] a').click();
 	S('.productView .actions .buttonLink').visible().click();
 
 	// Shopping cart should only have one item
@@ -163,13 +164,13 @@ test("Add products to cart", function() {
 		var addedProductId = S('.simpleCart_items .itemContainer:first').attr('data-productId');
 		equal(productId_1, addedProductId, "Visible products match selected brands");
 	});
-
+	
 	// Shopping cart total should be equals to the product price
 	S(function() {
 		var bootsPrice = S('.productPrice .amount').text();
 		S('.orderTotal').text(bootsPrice);
 	});
-
+	
 	// Let's add the same product again
 	S('.productView .actions .buttonLink').visible().click();
 
@@ -181,12 +182,13 @@ test("Add products to cart", function() {
 	// S('.shoppingCart .itemContainer input[name="quantity"]').attr('value', '2');
 	S('.shoppingCart .itemContainer .itemTotal').text('$59.98');
 	S('.shoppingCart .orderTotal').text('$59.98');
-	
+
 	// Now we go to another product detail page and add it to the cart
 	S('.productDetail .back a').click();
-	S('.product[data-id="' + productId_2 + '"]').click();
+	S('.product[data-id="' + productId_2 + '"]').visible();
+	S('.product[data-id="' + productId_2 + '"] a').click();
 	S('.productView .actions .buttonLink').visible().click();
-	
+
 	// Shopping cart should now have two items
 	S('.simpleCart_items .itemContainer').size(2);
 
@@ -198,6 +200,8 @@ test("Add products to cart", function() {
 
 	// Order total should have changed
 	S('.shoppingCart .orderTotal').text('$139.97');
+
+	// TODO Update first order item quantity by hand
 
 	// Now we checkout the order
 	S('.simpleCart_checkout').click();

@@ -1,0 +1,30 @@
+<div class="productView">
+	<div class="productDetail" data-productId="{{productData.id	}}">
+		<div class="back">
+			<a href="#/" class="buttonLink">Back to catalog</a>
+		</div>
+		<div class="bigImage">
+			<img ng-src="{{mainImgUrl}}">
+		</div>
+		<div class="alternativeImages">
+			<ul>
+				<li><img ng-src="/images/boots/product/{{productData.id}}/{{productData.id}}.jpg" style="width=100;" ng-click="setImage(1)" ng-class="{selected: 1==selectedImgIndex}"></li>
+				<li><img ng-src="/images/boots/product/{{productData.id}}/{{productData.id}}_2.jpg" ng-click="setImage(2)" style="width=100;" ng-class="{selected: 2==selectedImgIndex}"></li>
+				<li><img ng-src="/images/boots/product/{{productData.id}}/{{productData.id}}_3.jpg" ng-click="setImage(3)" style="width=100;" ng-class="{selected: 3==selectedImgIndex}"></li>
+				<li><img ng-src="/images/boots/product/{{productData.id}}/{{productData.id}}_4.jpg" ng-click="setImage(4)" style="width=100;" ng-class="{selected: 4==selectedImgIndex}"></li>
+				<li><img ng-src="/images/boots/product/{{productData.id}}/{{productData.id}}_5.jpg" ng-click="setImage(5)" style="width=100;" ng-class="{selected: 5==selectedImgIndex}"></li>
+			</ul>
+		</div>
+		<div class="productInfo">
+			<div class="name">
+				<span>{{productData.name}}</span>
+			</div>
+			<div class="productPrice">
+				<span class="label">Price: </span><span class="amount">{{productData.price | currency:"$"}}</span>
+			</div>
+			<div class="actions">
+				<a href="#" id="purchaseBt" class="buttonLink" ng-click="buyProduct($event)">Add to cart</a>
+			</div>
+		</div>
+	</div>
+</div>

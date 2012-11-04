@@ -8,8 +8,8 @@ function checkPrices(first, last) {
 module("Simple Cart", {
   setup: function() {
     // opens the page you want to test
-    // S.open("../vanilla/index.html");
-    S.open("../angular/index.html");
+    S.open("../vanilla/index.html");
+    // S.open("../angular/index.html");
   }
 });
 

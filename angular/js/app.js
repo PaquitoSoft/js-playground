@@ -1,7 +1,7 @@
 /*global angular:true, BootsListController:true, BootDetailController:true */
 'use strict';
 
-angular.module('bootsStore', ['bootsStoreFilter', 'appStorage']).config(['$routeProvider', function($routeProvider) {
+angular.module('bootsStore', ['bootsStoreFilter', 'appStorage', 'bootsStoreDirectives']).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl: 'templates/catalog-view.html',
 		controller: BootsListController

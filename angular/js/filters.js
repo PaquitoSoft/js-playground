@@ -1,4 +1,4 @@
-/*global angular:true, console:true */
+/*global angular:true */
 'use strict';
 
 (function() {

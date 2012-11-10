@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/controllers.js"></script>
 	<script type="text/javascript" src="js/filters.js"></script>
+	<script type="text/javascript" src="js/directives.js"></script>
 	<script type="text/javascript" src="js/services.js"></script>
   	<script type="text/javascript" src="js/lib/angular/angular-resource.js"></script>
 
@@ -40,19 +41,24 @@
 			
 			
 			<!--Add a Div with the class "simpleCart_items" to show your shopping cart area.-->
-			<div class="simpleCart_items" >
+			<div class="simpleCart_items" ng-switch on="orderPlaced">
 
-				<div ng-repeat="orderItem in orderItems" class="itemContainer" data-productid="{{orderItem.product.id}}">
-					<div class="itemImage">
-						<img ng-src="/images/boots/{{orderItem.product.brandCode}}/{{orderItem.product.id}}.jpg">
+				<p class="orderProcessMsg" ng-switch-when="true">Thanks for purchase!</p>
+
+				<div ng-switch-default>
+					<div ng-repeat="orderItem in orderItems" class="itemContainer" 
+							data-productid="{{orderItem.product.id}}">
+						<div class="itemImage">
+							<img ng-src="/images/boots/{{orderItem.product.brandCode}}/{{orderItem.product.id}}.jpg">
+						</div>
+						<div class="itemName">{{orderItem.product.shortName}}</div>
+						<div class="itemPrice">${{orderItem.product.price}}</div>
+						<div class="itemOptions"> </div>
+						<div class="itemQuantity">
+							<input type="text" name="quantity" value="{{orderItem.quantity}}" maxlength="2">
+						</div>
+						<div class="itemTotal">{{orderItem.amount | currency:"$"}}</div>
 					</div>
-					<div class="itemName">{{orderItem.product.shortName}}</div>
-					<div class="itemPrice">${{orderItem.product.price}}</div>
-					<div class="itemOptions"> </div>
-					<div class="itemQuantity">
-						<input type="text" name="quantity" value="{{orderItem.quantity}}" maxlength="2">
-					</div>
-					<div class="itemTotal">{{orderItem.amount | currency:"$"}}</div>
 				</div>
 
 			</div>

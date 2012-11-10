@@ -8,8 +8,14 @@ function checkPrices(first, last) {
 module("Simple Cart", {
   setup: function() {
     // opens the page you want to test
-    S.open("../vanilla/index.html");
-    // S.open("../angular/index.html");
+    var q = window.location.search,
+		index = q.indexOf('framework');
+
+	if (~index) {
+		S.open("../" + q.substr(index + 10) + "/index.html");
+	} else {
+		S.open("../vanilla/index.html");
+	}
   }
 });
 
@@ -133,18 +139,24 @@ test("Products ordering", function() {
 
 // Product detail navigation
 test("Product detail navigation", function() {
+	var productId = "th14221";
 
-	S('.product[data-id="th12739"] a').click();
+	S('.product[data-id="' + productId + '"] a').click();
 	S('.productView').visible();
 	S('.catalogView').invisible();
-	S('.productView .productDetail').attr('data-productId', 'th12739');
+	S('.productView .productDetail').attr('data-productId', productId);
 	S('.productView .productPrice .amount').text(function(price) {
-		return price.indexOf('39.99') !== -1;
+		return price.indexOf('49.99') !== -1;
 	});
 
 	S('.back a').click();
 	S('.productView').invisible();
 	S('.catalogView').visible();
+
+	// TODO Check scroll
+	// S('.product[data-id="' + productId + '"]').visible();
+	// S('.product[data-id="' + productId + '"] a').is(':visible');
+	// S('.product[data-id="' + productId + '"] a:visible').exists();
 });
 
 // Shopping cart

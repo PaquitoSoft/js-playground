@@ -27,7 +27,7 @@
 	<ul id="catalog">
 
 		<li ng-repeat="boot in filtered = (boots | filter: byBrand) | orderBy:productPriceOrder:reserve" class="product" 
-				data-id="{{boot.id}}" data-brandcode="{{boot.brandCode}}">
+				scroll-if="boot.id == prevItem" data-id="{{boot.id}}" data-brandcode="{{boot.brandCode}}">
 			<a href="#/boots/{{boot.id}}" class="bootDetailLink">
 				<img ng-src="/images/boots/{{boot.brandCode}}/{{boot.id}}.jpg">
 				<span class="price">{{boot.price | currency:"$"}}</span><b>{{boot.shortName}}</b>

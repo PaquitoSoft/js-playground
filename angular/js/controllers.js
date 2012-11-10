@@ -1,7 +1,8 @@
 "use strict";
 
 
-function BootsListController($scope, Products, $log) {
+function BootsListController($scope, Products, $routeParams, $log) {
+	$scope.prevItem = $routeParams.productId;
 
 	Products.all().then(function(results) {
 		$scope.brands = results.brands;
@@ -34,18 +35,21 @@ function BootsListController($scope, Products, $log) {
 }
 
 function BootDetailController($scope, $rootScope, $routeParams, Products) {
-	
+
 	Products.productById($routeParams.bootId).then(function(productData) {
+		productData.alternativeImages = [];
+		[1,2,3,4,5].forEach(function(count) {
+			// TODO This url path should not be here
+			productData.alternativeImages.push("/images/boots/product/" + productData.id + "/" + productData.id +
+				((count > 1) ? ('_' + count) : '') + ".jpg");
+		});
+		$scope.mainImgUrl = productData.alternativeImages[0];
 		$scope.productData = productData;
-		// TODO This url path should not be here
-		$scope.mainImgUrl = '/images/boots/product/' + productData.id + '/' + productData.id + '.jpg';
-		$scope.selectedImgIndex = 1;
+		$scope.selectedImgIndex = 0;
 	});
 	
 	$scope.setImage = function(index) {
-		// TODO This url path should not be here
-		$scope.mainImgUrl = '/images/boots/product/' + $scope.productData.id + '/' +
-			$scope.productData.id + ((index > 1) ? '_' + index : '') +'.jpg';
+		$scope.mainImgUrl = $scope.productData.alternativeImages[index];
 		$scope.selectedImgIndex = index;
 	};
 
@@ -60,6 +64,7 @@ function ShoppingCartController($scope, $rootScope, $log) {
 
 	$scope.orderItems = [];
 	$scope.totalAmount = 0.00;
+	$scope.orderPlaced = false;
 
 	var getOrderItem = function(productId) {
 		var result,
@@ -78,6 +83,11 @@ function ShoppingCartController($scope, $rootScope, $log) {
 
 	$scope.checkout = function($event) {
 		$event.preventDefault();
+		if ($scope.orderItems.length) {
+			$scope.orderItems = [];
+			$scope.totalAmount = 0.00;
+			$scope.orderPlaced = true;
+		}
 	};
 
 	$rootScope.$on('addProductToCart', function(event, product) {
@@ -97,6 +107,7 @@ function ShoppingCartController($scope, $rootScope, $log) {
 			});
 		}
 		$scope.totalAmount += price;
+		$scope.orderPlaced = false;
 	});
 
 }

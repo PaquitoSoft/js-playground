@@ -1,0 +1,217 @@
+<!doctype html>
+<html ng-app="bootsStore">
+<head>
+	<meta charset="utf-8"/>
+
+	<title>SimpleCart - Ember</title>
+	<link rel="stylesheet" href="../styles/example.css" type="text/css" media="screen" charset="utf-8" />
+	<!--[if lte IE 6]><link rel="stylesheet" href="../styles/ie6.css" type="text/css" media="screen" charset="utf-8" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" href="../styles/ie7.css" type="text/css" media="screen" charset="utf-8" /><![endif]-->
+
+	<!--CSS for the Cart. -->
+	<link rel="stylesheet" href="../styles/custom.css" type="text/css" media="screen" charset="utf-8" />
+
+	<!-- JS namespace declaration -->
+	<script>
+		$SC_APP = {
+			views: {},
+			collections: {},
+			models: {},
+			plugins: {},
+			runtime: {}
+		}
+	</script>
+
+</head>
+
+<body>
+	<div id="topFrame" class="contentHeader">
+		<span>Simple Cart JS - Ember</span>
+	</div>
+
+	<div id="content">
+
+		<div id="middleFrame">
+
+
+
+		</div>
+		
+		<div id="sidebar" class="shoppingCart">
+			<h2>Your Cart</h2>
+			<hr/>
+			
+			
+			<!--Add a Div with the class "simpleCart_items" to show your shopping cart area.-->
+			<div class="simpleCart_items" >
+
+				<!--
+				<p class="orderProcessMsg" >Thanks for purchase!</p>
+				-->				
+
+			</div>
+			
+			
+			<!--Here's the Links to Checkout and Empty Cart-->
+			<a href="#" class="simpleCart_checkout">Checkout</a>
+			
+			<div class="grandTotal">
+				<span>Total:</span>
+				<span class="orderTotal">$0.00</span>
+			</div>
+			
+		<!--End #sidebar-->	
+		</div>
+
+		<div id="footer">
+			Created by <a href="http://thewojogroup.com"><img src="../images/wojo.gif" alt="The Wojo Group" /></a> <a href="http://thewojogroup.com">The Wojo Group</a> &nbsp;&nbsp;
+			&bull;&nbsp;&nbsp;<img src="../images/microLogo.gif" alt="simple cart js" style="vertical-align:bottom" /> is licensed under <a href="#">MIT License</a>
+		</div>	
+	<!--End #content-->		
+	</div>
+
+	<!-- Templates -->
+	<script type="text/x-handlebars" data-template-name="application">
+		{{ outlet }}
+	</script>
+
+	<script type="text/x-handlebars" data-template-name="index">
+		INDEX
+	</script>
+
+	<script type="text/x-handlebars" data-template-name="brands">
+		<div id="catalogPanel" class="catalogView">
+			<div id="header">
+				<div class="brands">
+				{{#each brand in controller}}
+					<span>{{brand.name}}</span>
+				{{/each}}
+				</div>
+				<div class="resultsCount">_0_</div>
+				<hr/>
+			</div>
+
+			<div class="orderBy">
+				<div>
+					<span>Order by price:</span>
+					<select name="priceOrder" class="orderPrice">
+						<option value="none" selected="selected">---</option>
+						<option value="asc">Ascending</option>
+						<option value="desc">Descending</option>
+					</select>
+				</div>
+			</div>
+			
+			
+			<ul id="catalog" style="min-height: 338px;">
+				
+			</ul>
+		</div>
+	</script>
+
+	<script type="text/x-handlebars" data-template-name="catalog_2">
+		<div id="catalogPanel" class="catalogView">
+			<div id="header">
+				<div class="brands">
+				{{#brands}}
+					<span data-code="{{code}}">{{name}}</span>
+				{{/brands}}
+				<div>
+				<div class="resultsCount">{{productsCount}}</div>
+				<hr/>
+			</div>
+
+			<div class="orderBy">
+				<div>
+					<span>Order by price:</span>
+					<select name="priceOrder" class="orderPrice">
+						<option value="none" selected="selected">---</option>
+						<option value="asc">Ascending</option>
+						<option value="desc">Descending</option>
+					</select>
+				</div>
+			</div>
+			
+			
+			<ul id="catalog">
+				{{#products}}
+				<li class="product" data-id="{{id}}" data-brandCode="{{brandCode}}">
+					<a href="/boots/{{id}}" class="bootDetailLink">
+						<img src="/images/boots/{{brandCode}}/{{id}}.jpg">
+						<span class="price">${{price}}</span>
+						<b>{{shortName}}</b>
+					</a>
+				</li>
+				{{/products}}
+			</ul>
+		</div>
+	</script>
+
+	<script type="text/template" data-template-name="catalogItem">
+		<li class="product" data-id="{{id}}" data-brandCode="{{brandCode}}">
+			<a href="/boots/{{id}}" class="bootDetailLink">
+				<img src="/images/boots/{{brandCode}}/{{id}}.jpg">
+				<span class="price">${{price}}</span>
+				<b>{{shortName}}</b>
+			</a>
+		</li>
+	</script>
+
+	<script type="text/x-handlebars" data-template-name="productDetailTpl">
+		<div id="productPanel" class="productView">
+			<div class="productDetail" data-productId="{{id}}">
+				<div class="back">
+					<a href="./?productId={{id}}" class="buttonLink">Back to catalog</a>
+				</div>
+				<div class="bigImage">
+					<img ng-src="{{mainImgUrl}}">
+				</div>
+				<div class="alternativeImages">
+					<ul>
+						{{#alternativeImages}}
+							<li>
+								<img src="{{url}}" style="width=100;">
+							</li>
+						{{/alternativeImages}}
+					</ul>
+				</div>
+				<div class="productInfo">
+					<div class="name">
+						<span>{{name}}</span>
+					</div>
+					<div class="productPrice">
+						<span class="label">Price: </span><span class="amount">${{price}}</span>
+					</div>
+					<div class="actions">
+						<a href="#" id="purchaseBt" class="buttonLink">Add to cart</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/x-handlebars" data-template-name="orderItemTpl">
+		<div class="itemContainer" data-productid="{{product.id}}">
+			<div class="itemImage">
+				<img ng-src="/images/boots/{{product.brandCode}}/{{product.id}}.jpg">
+			</div>
+			<div class="itemName">{{product.shortName}}</div>
+			<div class="itemPrice">${{product.price}}</div>
+			<div class="itemOptions"> </div>
+			<div class="itemQuantity">
+				<input type="text" name="quantity" value="{{quantity}}" maxlength="2">
+			</div>
+			<div class="itemTotal">{{amount}}</div>
+		</div>
+	</script>
+
+	<!-- Load JS -->
+	<script src="js/lib/jquery-1.8.3.min.js"></script>
+	<script src="js/lib/handlebars-1.0.0.rc.2.js"></script>
+	<script src="js/lib/ember.js"></script>
+	<script src="js/lib/ember-data.js"></script>
+	
+	<script src="js/app.js"></script>
+</body>
+
+</html>

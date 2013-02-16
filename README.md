@@ -9,6 +9,6 @@ These are the ones I'm expecting to try:
 
   + Vanilla: Done (simple approach helped by jQuery)
   + [Angular](http://angularjs.org): Done
-  + [Backbone](http://backbonejs.org/): Not available yet  
+  + [Backbone](http://backbonejs.org/): In progress...  
   + [Spine](http://spinejs.com/): Not available yet
-  + [Ember](http://emberjs.com/): Not available yet
+  + [Ember](http://emberjs.com/): In progress...

@@ -84,7 +84,7 @@
 			<div id="header">
 				<div class="brands">
 				{{#each brand in controller}}
-					<span>{{brand.name}}</span>
+					<span>{{brand.code}}</span>
 				{{/each}}
 				</div>
 				<div class="resultsCount">_0_</div>
@@ -104,9 +104,21 @@
 			
 			
 			<ul id="catalog" style="min-height: 338px;">
-				
+				{{ render "products" }}
 			</ul>
 		</div>
+	</script>
+
+	<script type="text/x-handlebars" data-template-name="products">
+		{{#each product in controller}}
+		<li class="product">
+			<a href="#" class="bootDetailLink">
+				<img src="/images/boots/{{product.brand.code}}/{{product.id}}.jpg">
+				<span class="price">${{product.price}}</span>
+				<b>{{product.name}}</b>
+			</a>
+		</li>
+		{{/each}}
 	</script>
 
 	<script type="text/x-handlebars" data-template-name="catalog_2">

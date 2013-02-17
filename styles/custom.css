@@ -66,6 +66,9 @@
 #header h1 {
 	margin-left: 10px;
 }
+#footer {
+	padding-top: 15px;
+}
 #catalog {
 	height: auto;
 	margin: 0;
